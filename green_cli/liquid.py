@@ -5,6 +5,8 @@ from collections import defaultdict
 
 import click
 
+import greenaddress as gdk
+
 from green_cli import context
 from green_cli.green import green
 from green_cli.decorators import (
@@ -27,7 +29,7 @@ import green_cli.tx
 
 # Restrict networks to liquid networks and default to localtest-liquid
 params = {p.name: p for p in green.params}
-params['network'].type = click.Choice(['liquid', 'testnet-liquid', 'localtest-liquid'])
+params['network'].type = click.Choice(reversed([n for n in gdk.get_networks() if 'liquid' in n]))
 params['network'].help = None
 params['network'].default = 'localtest-liquid'
 
